@@ -1,18 +1,27 @@
 <script setup>
-  const emit = defineEmits(['addTodo', 'update:modelValue', 'changeAllTodo'])
-  const props = defineProps({
-    modelValue: String,
-    isAllCompleted: Boolean,
-  })
-  function updateValue(value) {
-    emit('update:modelValue', value)
-  }
-  function addTodo() {
-    emit('addTodo')
-  }
-  function updateAllTodo() {
-    emit('changeAllTodo')
-  }
+  import { storeToRefs } from 'pinia';
+  import { useTodoStore } from '@/stores/todo';
+    const store = useTodoStore();
+    const { isAllCompleted } = storeToRefs(store);
+    const emit = defineEmits(['update:modelValue']);
+    const props = defineProps({
+      modelValue: String,
+    });
+    function updateValue(value) {
+      emit('update:modelValue', value)
+    }
+    function addTodo() {
+      const data = {
+        id: Date.now() + Math.random(),
+        text: props.modelValue,
+        done: false
+      };
+      store.addTodo(data);
+      emit('update:modelValue','');
+    }
+    function updateAllTodo() {
+      store.changeAllTodo();
+    }
 </script>
 
 <template>

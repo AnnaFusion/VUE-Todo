@@ -1,11 +1,13 @@
 <script setup>
-  const props = defineProps({
-    notCompletedNumber: Number,
-    modelValue: String,
-    isCompleted: Boolean,
-  })
-  const emit = defineEmits(['update:modelValue', 'deleteCompleted'])
-  const buttons = ['All', 'Active', 'Completed']
+import { storeToRefs } from 'pinia';
+import { useTodoStore } from '@/stores/todo';
+  const store = useTodoStore();
+  const { 
+    allActiveCompleted, 
+    notCompletedNumber, 
+    isCompleted 
+    } = storeToRefs(store);
+  const buttons = ['All', 'Active', 'Completed'];
 </script>
 
 <template>
@@ -16,15 +18,15 @@
     <div class="footer__buttons">
       <button v-for="button in buttons"
         class="buttons__button"
-        :class="button===modelValue && 'active'"
-        @click="emit('update:modelValue', button)">
+        :class="button===allActiveCompleted && 'active'"
+        @click="allActiveCompleted=button">
         {{button}}
       </button>
     </div>
     <div class="footer__button">
       <button v-if="isCompleted"
         class="footer__clear-completed"
-        @click="emit('deleteCompleted')"
+        @click="()=>store.deleteCompleted()"
       >
         Clear completed
       </button>

@@ -1,10 +1,7 @@
 <script setup>
-import Todo from './Todo.vue'
-const props = defineProps({
-  todos: Array,
-})
-const emit =  defineEmits(['deleteTodo', 'changeTodo']);
-
+  import Todo from './Todo.vue';
+  import { useTodoStore } from '@/stores/todo';
+    const store = useTodoStore();
 </script>
 
 <template>
@@ -12,7 +9,7 @@ const emit =  defineEmits(['deleteTodo', 'changeTodo']);
     <Todo 
       @deleteTodo="(id) => emit('deleteTodo',id)"
       @changeTodo="(id) => emit('changeTodo',id)"
-      v-for="todo in todos" 
+      v-for="todo in store.filteredTodos" 
         :key="todo.id"
         :id="todo.id"
         :text="todo.text"

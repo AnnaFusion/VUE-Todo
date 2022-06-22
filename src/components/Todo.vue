@@ -1,29 +1,28 @@
 <script setup>
-  import { ref, computed } from 'vue'
-  const props = defineProps({
-    id: Number,
-    text: String,
-    done: Boolean
-  })
-  const emit = defineEmits(['deleteTodo', 'changeTodo']);
+  import { ref } from 'vue';
+  import { useTodoStore } from '@/stores/todo';
+    const store = useTodoStore();
+    const props = defineProps({
+      id: Number,
+      text: String,
+      done: Boolean
+    });
+    const classText = props.done ? {
+      button: 'done',
+      text: 'completed'
+    } : {
+      button: 'not-done',
+      text: 'not-completed'
+    };
+    const isHovered=ref(false);
 
-  const classText = props.done ? {
-    button: 'done',
-    text: 'completed'
-  } : {
-    button: 'not-done',
-    text: 'not-completed'
-  };
+    function deleteClick() {
+      store.deleteTodo(props.id);
+    }
 
-  const isHovered=ref(false)
-
-  function deleteClick() {
-    emit('deleteTodo',props.id)
-  }
-
-  function changeClick() {
-    emit('changeTodo',props.id)
-  }
+    function changeClick() {
+      store.changeTodo(props.id);
+    }
 </script>
 
 <template>
