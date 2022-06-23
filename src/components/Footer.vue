@@ -16,7 +16,7 @@
     <div class="footer__buttons">
       <button v-for="button in buttons"
         class="buttons__button"
-        :class="button===modelValue && 'active'"
+        :class="{active: button===modelValue}"
         @click="emit('update:modelValue', button)">
         {{button}}
       </button>

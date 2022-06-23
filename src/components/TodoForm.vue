@@ -24,6 +24,9 @@ const notCompletedTodos = computed(() => {
   return todos.value.filter((todo) => !todo.done) 
 });
 
+const isAllCompleted = computed(() => 
+  todos.value.length === completedTodos.value.length)
+
 function addTodo () {
   todos.value.push({ id: id++, text: newTodoText.value, done: false})
    newTodoText.value=''
@@ -40,7 +43,8 @@ function changeTodo(id) {
 }
 
 function changeAllTodo() {
-  todos.value.forEach((t) => t.done = !t.done)
+  const changedDone = isAllCompleted.value ? false : true;
+  todos.value.forEach((t) => t.done = changedDone)
 }
 
 function deleteCompleted() {
@@ -60,7 +64,7 @@ const filteredTodos = computed(() => {
       @addTodo="addTodo" 
       @changeAllTodo="changeAllTodo"
       v-model="newTodoText"
-      :isAllCompleted="todos.length === completedTodos.length"
+      :isAllCompleted="isAllCompleted"
     />
     <Todos 
       :todos="filteredTodos"

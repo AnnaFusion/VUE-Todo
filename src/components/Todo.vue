@@ -7,14 +7,6 @@
   })
   const emit = defineEmits(['deleteTodo', 'changeTodo']);
 
-  const classText = props.done ? {
-    button: 'done',
-    text: 'completed'
-  } : {
-    button: 'not-done',
-    text: 'not-completed'
-  };
-
   const isHovered=ref(false)
 
   function deleteClick() {
@@ -34,7 +26,6 @@
   >
     <button 
       class="item__button"  
-      :class="classText.button"
       @click='changeClick'
     >
       <img 
@@ -45,7 +36,8 @@
     </button>
     <div 
       class="item__text" 
-      :class="classText.text"> {{text}} 
+      :class="{completed: done}">
+        {{text}} 
     </div>
     <button
       v-if="isHovered"
