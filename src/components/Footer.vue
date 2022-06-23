@@ -18,8 +18,8 @@ import { useTodoStore } from '@/stores/todo';
     <div class="footer__buttons">
       <button v-for="button in buttons"
         class="buttons__button"
-        :class="button===allActiveCompleted && 'active'"
-        @click="allActiveCompleted=button">
+        :class="{active: button===allActiveCompleted}"
+        @click="store.allActiveCompleted=button">
         {{button}}
       </button>
     </div>

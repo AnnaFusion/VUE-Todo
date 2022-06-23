@@ -38,7 +38,8 @@ export const useTodoStore = defineStore({
       })
     },
     changeAllTodo() {
-      this.todos.forEach((t) => t.done = !t.done)
+      const changedDone =  this.isAllCompleted ? false : true;
+      this.todos.forEach((t) => t.done = changedDone)
     },
     deleteCompleted() {
       this.todos = this.todos.filter((t) => t.done !== true)

@@ -28,7 +28,7 @@
   <div class="new-todo">
     <button 
       class="new-todo__button"
-      :class="isAllCompleted  && 'ok_button'"
+      :class="{ok_button: isAllCompleted}"
       @click="updateAllTodo"
     >
       <img class="button__ok" src="/ok.png" />
